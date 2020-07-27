@@ -15,13 +15,6 @@ eval "$ngrok_cmd | tee ngrok.log &"
 ngrok_pid=$!
 
 
-
-# Do an inline sync first, then start the background job
-echo "Starting sync..."
-bin/sync
-eval "while true; do sleep ${AWS_SYNC_INTERVAL:-60}; bin/sync; done &"
-sync_pid=$!
-
 # create server config
 echo "server-port=${mc_port}" >> /app/server.properties
 for f in whitelist banned-players banned-ips ops; do
@@ -42,11 +35,10 @@ case $limit in
 esac
 
 echo "Starting: minecraft ${mc_port}"
-eval "screen -L -h 2048 -dmS minecraft LD_LIBRARY_PATH=. ./bedrock_server"
+eval "LD_LIBRARY_PATH=. ./bedrock_server"
 main_pid=$!
 
-# Flush the logfile every second, and ensure that the logfile exists
-screen -X "logfile 1" && sleep 1
+
 
 echo "Tailing log"
 eval "tail -f screenlog.0 &"

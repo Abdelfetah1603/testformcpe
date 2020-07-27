@@ -85,6 +85,7 @@ wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.16.1.02.zip
 echo " start extractiong ===================================================================="
 unzip bedrock-server-1.16.1.02.zip
 cd ../
+mv bedrock $BUILD_DIR/bedrock
 
 if [ -n "${MINECRAFT_EULA:-""}" ]; then
   echo -n "-----> Accepting Minecraft EULA... "

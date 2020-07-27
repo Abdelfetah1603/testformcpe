@@ -68,8 +68,11 @@ mv dropbox_uploader.sh $BUILD_DIR/bin
 echo "done"
 
 echo -n "-----> Installing ngrok... "
+mkdir ngroktest
+cd ngroktest
 curl --silent -o ngrok.zip -L "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip" | indent
 unzip ngrok.zip -d $BUILD_DIR/bin > /dev/null 2>&1
+cd ../
 echo "done"
 
 wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.16.1.02.zip

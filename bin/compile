@@ -1,5 +1,24 @@
 #!/bin/sh
 
+set -eu
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+export_env_dir() {
+  env_dir=$1
+  whitelist_regex=${2:-''}
+  blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH|JAVA_OPTS)$'}
+  if [ -d "$env_dir" ]; then
+    for e in $(ls $env_dir); do
+      echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+      export "$e=$(cat $env_dir/$e)"
+      :
+    done
+  fi
+}
+
 BP_DIR="$(cd "$(dirname "$0")" && pwd)"
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -14,21 +33,6 @@ APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state
 mkdir -p "$APT_CACHE_DIR/archives/partial"
 mkdir -p "$APT_STATE_DIR/lists/partial"
 
-
-echo -n "-----> Installing ngrok... "
-curl --silent -o ngrok.zip -L "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip" | indent
-unzip ngrok.zip -d $BUILD_DIR/bin > /dev/null 2>&1
-echo "done"
-
-wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.16.1.02.zip
-echo " start extractiong ===================================================================="
-unzip bedrock-server-1.16.1.02.zip
-echo "done...minecraft server"
-
-echo -n "-----> Installing Dropbox... "
-curl --silent -o dropbox_uploader.sh -L "https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh" | indent
-mv dropbox_uploader.sh $BUILD_DIR/bin
-echo "done"
 
 echo "-----> Installing screen... "
 apt-get $APT_OPTIONS -y --force-yes -d install --reinstall screen | indent
@@ -50,6 +54,32 @@ EOF
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   dpkg -x $DEB $BUILD_DIR/.apt/
 done
+wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.16.1.02.zip
+echo " start extractiong ===================================================================="
+unzip bedrock-server-1.16.1.02.zip
+echo "done...minecraft server"
+
+echo -n "-----> Installing Dropbox... "
+curl --silent -o dropbox_uploader.sh -L "https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh" | indent
+mv dropbox_uploader.sh $BUILD_DIR/bin
+echo "done"
+
+echo -n "-----> Installing ngrok... "
+curl --silent -o ngrok.zip -L "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip" | indent
+unzip ngrok.zip -d $BUILD_DIR/bin > /dev/null 2>&1
+echo "done"
+
+wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.16.1.02.zip
+echo " start extractiong ===================================================================="
+unzip bedrock-server-1.16.1.02.zip
+echo "done...minecraft server"
+
+echo -n "-----> Installing Dropbox... "
+curl --silent -o dropbox_uploader.sh -L "https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh" | indent
+mv dropbox_uploader.sh $BUILD_DIR/bin
+echo "done"
+
+
 
 
 mkdir -p $BUILD_DIR/bin

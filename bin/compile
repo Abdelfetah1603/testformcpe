@@ -1,35 +1,4 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@Abdelfetah1603 
-tobnap
-/
-minecraftBuildpack
-forked from gamer4life1/minecraftBuildpack
-0
-2200
-Code
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-minecraftBuildpack/bin/compile
-@tobnap
-tobnap fixed regex for downloading correct minecraft version
-Latest commit ead85b1 on Jul 18, 2019
- History
- 6 contributors
-@jkutner@flacoste@gamer4life1@tobnap@wuleicanada@saanvik
-Executable File  97 lines (78 sloc)  3.31 KB
-  
-#!/bin/sh
+ #!/bin/sh
 
 set -eu
 
@@ -126,15 +95,3 @@ mkdir -p $BUILD_DIR/bin
 
 chmod +x $BUILD_DIR/bin/minecraft
 chmod +x $BUILD_DIR/bin/sync
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo apt update
-sudo apt install screen
+apt update
+apt install screen
 
 echo "success"

@@ -64,6 +64,7 @@ unzip ngrok.zip -d $BUILD_DIR/bin > /dev/null 2>&1
 echo "done"
 
 wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.16.1.02.zip
+echo " start extractiong ===================================================================="
 unzip bedrock-server-1.16.1.02.zip
 echo "done...minecraft server"
 

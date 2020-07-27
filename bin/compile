@@ -79,10 +79,12 @@ curl -o minecraft.jar -s -L $minecraft_url
 mv minecraft.jar $BUILD_DIR/minecraft.jar
 echo "done"
 
+mkdir bedrock
+cd bedrock
 wget https://minecraft.azureedge.net/bin-linux/bedrock-server-1.16.1.02.zip
 echo " start extractiong ===================================================================="
 unzip bedrock-server-1.16.1.02.zip
-
+cd ../
 
 if [ -n "${MINECRAFT_EULA:-""}" ]; then
   echo -n "-----> Accepting Minecraft EULA... "
